@@ -1,7 +1,7 @@
 # My-Carrot Game
 ---
 
-## 목표(or 목적) :rocket: 
+## 목표 :rocket: 
 1. 자바스크립트에 대한 이해 높이기.
 1. 구조적으로 깔끔하게 순수 자바스크립트 작성하기.
 1. 문제해결 능력(Problem-solving Skills)기르기.
