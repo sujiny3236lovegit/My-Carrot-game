@@ -15,6 +15,12 @@ const popUp = document.querySelector('.pop-up');
 const popUpText = document.querySelector('.pop-up__message');
 const popUpRefresh = document.querySelector('.pop-up__refresh');
 
+const bgSound = new Audio('./sound/bg.mp3');
+const alertSound = new Audio('./sound/alert.wav');
+const winSound = new Audio('./sound/game_win.mp3');
+const carrotSound = new Audio('./sound/carrot_pull.mp3');
+const bugSound = new Audio('./sound/bug_pull.mp3');
+
 let started = false;
 let score = 0;
 let timer = undefined;
@@ -41,6 +47,7 @@ function startGame(){
   showStopButton();
   showTimerAndScore();
   startGameTimer();
+  playSound(bgSound);
 }
 
 function stopGame(){
@@ -48,11 +55,17 @@ function stopGame(){
   stopGameTimer();
   hideGameButton();
   showPopUpWithText('REPLAY?');
+  stopSoun(bgSound);
 }
 
 function finishGame(win){
   started = false;
   hideGameButton();
+  if(win){
+    playSound(winSound);
+  }else(lost){
+    playSound(bugSound);
+  }
   showPopUpWithText(win ? 'YOU WON!' : 'YOU LOST!');
 }
 
@@ -120,6 +133,7 @@ function onFieldClick(event){
     //target이 carrot일때
     target.remove();
     score++;
+    playSound(carrotSound);
     updateScoreBoard();
     if(score === CARROT_COUNT){
       finishGame(true); //boolean으로 하는 것은 사실 가독성이 낮아지므로 좋지않다.
@@ -129,6 +143,14 @@ function onFieldClick(event){
     stopGameTimer();
     finishGame(false);
   }
+}
+
+function playSound(sound){
+  sound.play();
+}
+
+function stopSound(){
+  sound.pause();
 }
 
 function updateScoreBoard(){
