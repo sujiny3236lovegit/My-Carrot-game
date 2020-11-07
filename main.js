@@ -55,7 +55,8 @@ function stopGame(){
   stopGameTimer();
   hideGameButton();
   showPopUpWithText('REPLAY?');
-  stopSoun(bgSound);
+  stopSound(bgSound);
+  playSound(alertSound);
 }
 
 function finishGame(win){
@@ -66,6 +67,8 @@ function finishGame(win){
   }else(lost){
     playSound(bugSound);
   }
+  stopGameTimer();
+  stopSound(bgSound);
   showPopUpWithText(win ? 'YOU WON!' : 'YOU LOST!');
 }
 
@@ -73,6 +76,7 @@ function showStopButton(){
   const icon = gameBtn.querySelector('.fas');
   icon.classList.add('fa-stop');
   icon.classList.remove('fa-play');
+  gameBtn.style.visibility = 'visible';
 }
 
 function hideGameButton(){
@@ -117,6 +121,7 @@ function hidePopUp(){
 }
 
 function initGame(){
+  score = 0;
   field.innerHTML = '';
   gameScore.innerText = CARROT_COUNT;
   //벌레와 당근을 생성한 뒤 field에 추가해줌
@@ -140,12 +145,12 @@ function onFieldClick(event){
     }
   }else if(target.matches('.bug')){
     // target이 bug일때
-    stopGameTimer();
     finishGame(false);
   }
 }
 
 function playSound(sound){
+  sound.currentTime = 0;
   sound.play();
 }
 
